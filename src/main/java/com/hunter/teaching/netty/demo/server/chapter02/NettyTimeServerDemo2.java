@@ -1,4 +1,4 @@
-package com.hunter.teaching.netty.demo.server.chapter01;
+package com.hunter.teaching.netty.demo.server.chapter02;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -12,7 +12,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 /**
  * This Demo is not consider the tcp stick package or tcp unpacking
  */
-public class NettyTimeServerDemo1 {
+public class NettyTimeServerDemo2 {
 
     public void bind(int port) throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -35,14 +35,14 @@ public class NettyTimeServerDemo1 {
 
         @Override
         protected void initChannel(SocketChannel sc) throws Exception {
-            sc.pipeline().addLast(new NettyTimeServerHandlerDemo1());
+            sc.pipeline().addLast(new NettyTimeServerHandlerDemo2());
 
         }
 
     }
     
     public static void main(String[] args) throws Exception {
-        NettyTimeServerDemo1 nettyTimeServerDemo = new NettyTimeServerDemo1();
+        NettyTimeServerDemo2 nettyTimeServerDemo = new NettyTimeServerDemo2();
         nettyTimeServerDemo.bind(10080);
     }
 
