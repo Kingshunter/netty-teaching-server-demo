@@ -21,7 +21,7 @@ public class NettyTimeServerDemo2 {
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).option(ChannelOption.SO_BACKLOG, 1024)
-                    .childHandler(new NettyChildChannelHandlerClientDemo1());
+                    .childHandler(new NettyChildChannelHandlerServerDemo());
             ChannelFuture f = b.bind(port).sync();
 
             f.channel().closeFuture().sync();
@@ -32,7 +32,7 @@ public class NettyTimeServerDemo2 {
         }
     }
 
-    private class NettyChildChannelHandlerClientDemo1 extends ChannelInitializer<SocketChannel> {
+    private class NettyChildChannelHandlerServerDemo extends ChannelInitializer<SocketChannel> {
 
         @Override
         protected void initChannel(SocketChannel sc) throws Exception {
