@@ -1,4 +1,4 @@
-package com.hunter.teaching.netty.demo.server.chapter02;
+package com.hunter.teaching.netty.demo.server.chapter02.part1;
 
 import java.nio.charset.Charset;
 import java.time.Instant;
