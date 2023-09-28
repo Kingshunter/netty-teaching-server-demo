@@ -1,4 +1,4 @@
-package com.hunter.teaching.netty.demo.server.chapter02.part1;
+package com.hunter.teaching.netty.demo.server.chapter02;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
