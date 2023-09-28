@@ -12,7 +12,7 @@ import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 
 /**
- * This Demo consider the tcp stick package or tcp unpacking
+ * This Demo consider the tcp stick package or tcp unpacking issues
  * 
  */
 public class NettyTimeServerDemo {
