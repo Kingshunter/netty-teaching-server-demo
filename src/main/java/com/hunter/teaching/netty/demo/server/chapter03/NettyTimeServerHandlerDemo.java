@@ -1,28 +1,29 @@
-package com.hunter.teaching.netty.demo.server.chapter01;
+package com.hunter.teaching.netty.demo.server.chapter03;
 
-import java.nio.charset.Charset;
 import java.time.Instant;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
-public class NettyTimeServerHandlerDemo1 extends ChannelInboundHandlerAdapter {
+public class NettyTimeServerHandlerDemo extends ChannelInboundHandlerAdapter {
 
+    private final AtomicInteger atomicInteger = new AtomicInteger(0);
+    
     /**
      * read the client info
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf byteBuf1 = (ByteBuf) msg;
-        byte[] byteArr = new byte[byteBuf1.readableBytes()];
-        byteBuf1.readBytes(byteArr);
-        String receiveInfo = new String(byteArr, Charset.defaultCharset());
+        String receiveInfo = (String) msg;
         System.out.println("The time server receive order : " + receiveInfo);
         String currentTimeStr = "Query Time Order".equalsIgnoreCase(receiveInfo) ? String.valueOf(Instant.now().toEpochMilli()) : "Bad Order";
         ByteBuf byteBuf2 = Unpooled.copiedBuffer(currentTimeStr.getBytes());
         ctx.write(byteBuf2);
+        int count = atomicInteger.incrementAndGet();
+        System.out.println("server receive count = " + count);
      }
 
     @Override

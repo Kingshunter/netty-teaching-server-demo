@@ -13,7 +13,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  * This Demo is not consider the tcp stick package or tcp unpacking
  * 
  */
-public class NettyTimeServerDemo2 {
+public class NettyTimeServerDemo {
 
     public void bind(int port) throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -37,14 +37,14 @@ public class NettyTimeServerDemo2 {
 
         @Override
         protected void initChannel(SocketChannel sc) throws Exception {
-            sc.pipeline().addLast(new NettyTimeServerHandlerDemo2());
+            sc.pipeline().addLast(new NettyTimeServerHandlerDemo());
 
         }
 
     }
     
     public static void main(String[] args) throws Exception {
-        NettyTimeServerDemo2 nettyTimeServerDemo = new NettyTimeServerDemo2();
+        NettyTimeServerDemo nettyTimeServerDemo = new NettyTimeServerDemo();
         nettyTimeServerDemo.bind(10080);
     }
 

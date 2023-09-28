@@ -1,4 +1,4 @@
-package com.hunter.teaching.netty.demo.server.chapter01;
+package com.hunter.teaching.netty.demo.server.chapter03;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -8,11 +8,14 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 
 /**
  * This Demo is not consider the tcp stick package or tcp unpacking
+ * 
  */
-public class NettyTimeServerDemo1 {
+public class NettyTimeServerDemo {
 
     public void bind(int port) throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -20,9 +23,8 @@ public class NettyTimeServerDemo1 {
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
-            .channel(NioServerSocketChannel.class)
-            .option(ChannelOption.SO_BACKLOG, 1024)
-            .childHandler(new NettyChildChannelHandlerClientDemo());
+            .channel(NioServerSocketChannel.class).option(ChannelOption.SO_BACKLOG, 1024)
+            .childHandler(new NettyChildChannelHandlerServerDemo());
             ChannelFuture f = b.bind(port).sync();
 
             f.channel().closeFuture().sync();
@@ -33,18 +35,20 @@ public class NettyTimeServerDemo1 {
         }
     }
 
-    private class NettyChildChannelHandlerClientDemo extends ChannelInitializer<SocketChannel> {
+    private class NettyChildChannelHandlerServerDemo extends ChannelInitializer<SocketChannel> {
 
         @Override
         protected void initChannel(SocketChannel sc) throws Exception {
-            sc.pipeline().addLast(new NettyTimeServerHandlerDemo1());
+            sc.pipeline().addLast(new LineBasedFrameDecoder(1024));
+            sc.pipeline().addLast(new StringDecoder());
+            sc.pipeline().addLast(new NettyTimeServerHandlerDemo());
 
         }
 
     }
-
+    
     public static void main(String[] args) throws Exception {
-        NettyTimeServerDemo1 nettyTimeServerDemo = new NettyTimeServerDemo1();
+        NettyTimeServerDemo nettyTimeServerDemo = new NettyTimeServerDemo();
         nettyTimeServerDemo.bind(10080);
     }
 
