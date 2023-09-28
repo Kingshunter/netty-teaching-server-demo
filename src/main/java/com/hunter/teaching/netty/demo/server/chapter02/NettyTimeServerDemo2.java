@@ -20,8 +20,9 @@ public class NettyTimeServerDemo2 {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
             ServerBootstrap b = new ServerBootstrap();
-            b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).option(ChannelOption.SO_BACKLOG, 1024)
-                    .childHandler(new NettyChildChannelHandlerServerDemo());
+            b.group(bossGroup, workerGroup)
+            .channel(NioServerSocketChannel.class).option(ChannelOption.SO_BACKLOG, 1024)
+            .childHandler(new NettyChildChannelHandlerServerDemo());
             ChannelFuture f = b.bind(port).sync();
 
             f.channel().closeFuture().sync();
