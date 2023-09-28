@@ -10,7 +10,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 /**
- * This Demo is not consider the tcp stick package or tcp unpacking
+ * This Demo doesn't consider the tcp stick package or tcp unpacking
  * 
  */
 public class NettyTimeServerDemo {
