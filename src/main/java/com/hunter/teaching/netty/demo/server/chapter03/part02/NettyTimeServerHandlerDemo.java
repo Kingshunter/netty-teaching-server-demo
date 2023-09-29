@@ -1,4 +1,4 @@
-package com.hunter.teaching.netty.demo.server.chapter03;
+package com.hunter.teaching.netty.demo.server.chapter03.part02;
 
 import java.time.Instant;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,8 +20,11 @@ public class NettyTimeServerHandlerDemo extends ChannelInboundHandlerAdapter {
         String receiveInfo = (String) msg;
         System.out.println("The time server receive order : " + receiveInfo);
         String currentTimeStr = "Query Time Order".equalsIgnoreCase(receiveInfo) ? String.valueOf(Instant.now().toEpochMilli()) : "Bad Order";
-        ByteBuf byteBuf2 = Unpooled.copiedBuffer(currentTimeStr.getBytes());
-        ctx.write(byteBuf2);
+        // need to add "\r\n" symbol due to the client use LineBasedFrameDecoder
+        // the client cannot receive any messages if we do not add it because LineBasedFrameDecoder discard the over maxLength message
+        currentTimeStr += "\r\n";
+        ByteBuf byteBuf = Unpooled.copiedBuffer(currentTimeStr.getBytes());
+        ctx.write(byteBuf);
         int count = atomicInteger.incrementAndGet();
         System.out.println("server receive count = " + count);
      }
