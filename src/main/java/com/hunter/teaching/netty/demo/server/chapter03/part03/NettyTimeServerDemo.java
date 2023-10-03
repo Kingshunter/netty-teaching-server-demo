@@ -1,8 +1,6 @@
 package com.hunter.teaching.netty.demo.server.chapter03.part03;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -10,7 +8,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
@@ -45,9 +43,8 @@ public class NettyTimeServerDemo {
 
         @Override
         protected void initChannel(SocketChannel sc) throws Exception {
-            ByteBuf delimiterBuf = Unpooled.copiedBuffer("&".getBytes());
-            // DelimiterBasedFrameDecoder slove the tcp stick package or tcp unpacking issues
-            sc.pipeline().addLast(new DelimiterBasedFrameDecoder(1024, delimiterBuf));
+            // FixedLengthFrameDecoder slove the tcp stick package or tcp unpacking issues
+            sc.pipeline().addLast(new FixedLengthFrameDecoder(16));
             // StringDecoder transfer the bytebuf object to string object automatically
             sc.pipeline().addLast(new StringDecoder());
             sc.pipeline().addLast(new NettyTimeServerHandlerDemo());

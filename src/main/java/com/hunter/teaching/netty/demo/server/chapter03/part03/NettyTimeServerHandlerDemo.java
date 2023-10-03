@@ -20,9 +20,8 @@ public class NettyTimeServerHandlerDemo extends ChannelInboundHandlerAdapter {
         String receiveInfo = (String) msg;
         System.out.println("The time server receive order : " + receiveInfo);
         String currentTimeStr = "Query Time Order".equalsIgnoreCase(receiveInfo) ? String.valueOf(Instant.now().toEpochMilli()) : "Bad Order";
-        // need to add "&" symbol due to the client use LineBasedFrameDecoder
-        // the client cannot receive any messages if we do not add it because LineBasedFrameDecoder discard the over maxLength message
-        currentTimeStr += "&";
+        
+        // the client cannot receive any messages if we do not add it because FixedLengthFrameDecoder discard the over maxLength message
         ByteBuf byteBuf = Unpooled.copiedBuffer(currentTimeStr.getBytes());
         ctx.write(byteBuf);
         int count = atomicInteger.incrementAndGet();
