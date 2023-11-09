@@ -13,15 +13,13 @@ import java.time.Instant;
 
 public class NIOTimeBlockingServerDemo {
 
-    private static final String HOST_NAME = "127.0.0.1";
-
     private static final int PORT = 6666;
     
     private static int LOOP = 100;
 
     public static void main(String[] args) throws IOException {
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
-        SocketAddress socketAddress = new InetSocketAddress(HOST_NAME, PORT);
+        SocketAddress socketAddress = new InetSocketAddress(PORT);
         serverSocketChannel.bind(socketAddress);
         System.out.println("server is ok!");
         do {

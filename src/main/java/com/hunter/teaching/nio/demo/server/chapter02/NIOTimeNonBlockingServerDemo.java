@@ -16,15 +16,13 @@ import java.util.concurrent.TimeUnit;
 
 public class NIOTimeNonBlockingServerDemo {
     
-    private static final String HOST_NAME = "127.0.0.1";
-
     private static final int PORT = 6666;
     
     private static int LOOP = 100;
 
     public static void main(String[] args) throws IOException, InterruptedException {
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
-        SocketAddress socketAddress = new InetSocketAddress(HOST_NAME, PORT);
+        SocketAddress socketAddress = new InetSocketAddress(PORT);
         serverSocketChannel.configureBlocking(false);
         serverSocketChannel.bind(socketAddress, 5);
         System.out.println("server is ok!");
